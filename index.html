@@ -25,7 +25,15 @@
     console.log(validWords);
 
     //manage key input
-
+    const buttons = document.querySelectorAll("button");
+    let letterClicks = 0;
+    function handleKeys(e){
+        letterClicks++;
+        buttons.forEach(button => {if(button.className == letterClicks){
+            button.textContent = e.key;
+        }});
+    }
+    window.addEventListener('keydown', handleKeys);
 
 </script>
 </body>
