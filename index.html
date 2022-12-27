@@ -28,11 +28,19 @@
     const buttons = document.querySelectorAll("#input");
     let letterClicks = 0;
     function handleKeys(e){
-        letterClicks++;
-        if(letterClicks > 5) return;
-        buttons.forEach(button => {if(button.className == letterClicks){
-            button.textContent = e.key;
-        }});
+        let erase = false;
+        if(e.key == 'Backspace') erase = true;
+        erase ? letterClicks-- : letterClicks++;
+        if(letterClicks < 0) letterClicks = 0;
+        else if(letterClicks > 5) letterClicks = 5;
+        buttons.forEach(button => {
+            if(!erase){
+                if(button.className == letterClicks) button.textContent = e.key;
+            }
+            else if(erase){
+                if(button.className == letterClicks+1) button.textContent = "";
+            }
+        });
     }
     window.addEventListener('keydown', handleKeys);
 
