@@ -27,12 +27,18 @@
     //manage key input
     const buttons = document.querySelectorAll("#input");
     let letterClicks = 0;
+    const validKeys = 'abcdefghijklmnopqrstuvwxyz'.split('');
+    validKeys.push('Backspace', 'Enter');
+
     function handleKeys(e){
         let erase = false;
+        if(!validKeys.includes(e.key))return;
         if(e.key == 'Backspace') erase = true;
         erase ? letterClicks-- : letterClicks++;
-        if(letterClicks < 0) letterClicks = 0;
+
+        if(letterClicks < 0) letterClicks = 0; 
         else if(letterClicks > 5) letterClicks = 5;
+
         buttons.forEach(button => {
             if(!erase){
                 if(button.className == letterClicks) button.textContent = e.key;
