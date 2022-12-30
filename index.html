@@ -25,7 +25,6 @@
 
     //manage key input
     const buttons = document.querySelectorAll("#input");
-    let letterClicks = 0;
     const validKeys = 'abcdefghijklmnopqrstuvwxyz'.split('');
     let chosenWord = '';
     let currentWord = '';
@@ -38,34 +37,28 @@
 
     function handleKeys(e){
         let erase = false;
-        if(validKeys.includes(e.key)){ //input letter
-            letterClicks++;
+        if(validKeys.includes(e.key) && currentWord.length < 5){ //input letter
             currentWord+=e.key;
             buttons.forEach(button => {
                 if(button.className == letterClicks){
                     button.textContent = e.key;
                 }
             });
-        }else if(e.key == 'Backspace'){ //erase letter
-            letterClicks--;
+        }else if(e.key == 'Backspace' && currentWord.length > 0){ //erase letter
             currentWord = currentWord.slice(0,-1);
             buttons.forEach(button => {
                 if(button.className == letterClicks+1){
                     button.textContent = '';
                 }
             });
-        }else if (e.key == 'Enter' && letterClicks == 5){
-            //check if currentWord is a valid word
-            let wordIsValid = false;
-            if(validWords.includes(currentWord)) wordIsValid = true;
+        }else if (e.key == 'Enter' && currentWord.length == 5){
+            //check if currentWord is a valid word and 
             //check if currentWord is chosen word
-            let wordIsCorrect = false;
-            if(currentWord == chosenWord && wordIsValid == true){
+            if(validWords.includes(currentWord) && currentWord == chosenWord){
                 console.log('correct!');
             }
         }
-        if(letterClicks < 0) letterClicks = 0;
-        else if(letterClicks > 5) letterClicks = 5;
+        console.log(currentWord);
     }
     window.addEventListener('keydown', handleKeys);
 
