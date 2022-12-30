@@ -10,17 +10,42 @@
 <body>
 
     <div class="word-screen">
-        <button id="input" class="1">X</button>
-        <button id="input" class="2">X</button>
-        <button id="input" class="3">X</button>
-        <button id="input" class="4">X</button>
-        <button id="input" class="5">X</button>
+        <button id="input" class="1"></button>
+        <button id="input" class="2"></button>
+        <button id="input" class="3"></button>
+        <button id="input" class="4"></button>
+        <button id="input" class="5"></button>
+        <button id="input" class="11"></button>
+        <button id="input" class="12"></button>
+        <button id="input" class="13"></button>
+        <button id="input" class="14"></button>
+        <button id="input" class="15"></button>
+        <button id="input" class="21"></button>
+        <button id="input" class="22"></button>
+        <button id="input" class="23"></button>
+        <button id="input" class="24"></button>
+        <button id="input" class="25"></button>
+        <button id="input" class="31"></button>
+        <button id="input" class="32"></button>
+        <button id="input" class="33"></button>
+        <button id="input" class="34"></button>
+        <button id="input" class="35"></button>
+        <button id="input" class="41"></button>
+        <button id="input" class="42"></button>
+        <button id="input" class="43"></button>
+        <button id="input" class="44"></button>
+        <button id="input" class="45"></button>
+        <button id="input" class="51"></button>
+        <button id="input" class="52"></button>
+        <button id="input" class="53"></button>
+        <button id="input" class="54"></button>
+        <button id="input" class="55"></button>
     </div>
 
 <script>
 
     //this method of finding 5 letter words
-    const wordList = ["cats","alien","trout","dog","arithmetic","balls","jingle"]; //should only accept 5 letter words
+    const wordList = ["cats","alien","trout","mouth","mooth","dog","arithmetic","balls","jingle",'falls',"stalk"]; //should only accept 5 letter words
     const validWords = wordList.filter(word => word.length == 5);
 
     //manage key input
@@ -28,6 +53,7 @@
     const validKeys = 'abcdefghijklmnopqrstuvwxyz'.split('');
     let chosenWord = '';
     let currentWord = '';
+    let buttonClassOffset = 0;
 
     function chooseWord() {
         chosenWord = validWords[Math.floor(Math.random() * validWords.length)];
@@ -36,27 +62,83 @@
     console.log(chosenWord);
 
     function handleKeys(e){
-        let erase = false;
+        
         if(validKeys.includes(e.key) && currentWord.length < 5){ //input letter
-            currentWord+=e.key;
+
+            currentWord += e.key;
+
             buttons.forEach(button => {
-                if(button.className == currentWord.length){
+                if(button.className == currentWord.length + buttonClassOffset){
                     button.textContent = e.key;
                 }});
+
         }else if(e.key == 'Backspace' && currentWord.length > 0){ //erase letter
+
             currentWord = currentWord.slice(0,-1);
+
             buttons.forEach(button => {
-                if(button.className == currentWord.length + 1){
+                if(button.className == currentWord.length + buttonClassOffset + 1){
                     button.textContent = '';
                 }});
+
         }else if (e.key == 'Enter' && currentWord.length == 5){
             //check if currentWord is a valid word and 
             //check if currentWord is chosen word
             if(validWords.includes(currentWord) && currentWord == chosenWord){
+
                 console.log('correct!');
+                //reset game here
+                chooseWord();
+
+            }else if(validWords.includes(currentWord) && currentWord != chosenWord){
+
+                //determine correct letters
+                let inputLetters = currentWord.split('');
+                let lettersToCompare = chosenWord.split('');
+                const correctLetters = inputLetters.filter(letter => lettersToCompare.includes(letter));
+                const distinctLetters = [...new Set(correctLetters)];
+                
+                console.log(distinctLetters); 
+
+                //determine green letters and yellow letters
+                let greenLetters = [];
+                let yellowLetters = [];
+                for(let i = 0; i < inputLetters.length; i++){
+                    if (inputLetters[i] == lettersToCompare[i]){
+
+                        greenLetters.push(inputLetters[i]);
+
+                    }else if(distinctLetters.includes(inputLetters[i])){
+                        
+                        yellowLetters.push(inputLetters[i]);
+
+                    }
+                }
+                //change colors of buttons
+                buttons.forEach(button => {
+                    if(button.className >= buttonClassOffset){
+
+                        if(greenLetters.includes(button.textContent)){
+
+                            button.style.backgroundColor = 'green';
+
+                        }else if(yellowLetters.includes(button.textContent)){
+
+                            button.style.backgroundColor = 'yellow';
+
+                        }
+                    }
+                });
+                console.log(greenLetters);
+                console.log(yellowLetters);
+
+               //reset current word
+               currentWord = '';
+               //set new offset for new row
+                if(buttonClassOffset < 50) buttonClassOffset += 10;
             }
+
         }
-        console.log(currentWord);
     }
     window.addEventListener('keydown', handleKeys);
 
