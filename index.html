@@ -22,31 +22,40 @@
     //this method of finding 5 letter words
     const wordList = ["cats","alien","trout","dog","arithmetic","balls","jingle"]; //should only accept 5 letter words
     const validWords = wordList.filter(word => word.length == 5);
-    console.log(validWords);
 
     //manage key input
     const buttons = document.querySelectorAll("#input");
     let letterClicks = 0;
     const validKeys = 'abcdefghijklmnopqrstuvwxyz'.split('');
-    validKeys.push('Backspace', 'Enter');
+    let chosenWord = '';
+    let currentWord = '';
+
+    function chooseWord() {
+        chosenWord = validWords[Math.floor(Math.random() * validWords.length)];
+    }
+    chooseWord();
 
     function handleKeys(e){
         let erase = false;
-        if(!validKeys.includes(e.key))return;
-        if(e.key == 'Backspace') erase = true;
-        erase ? letterClicks-- : letterClicks++;
-
-        if(letterClicks < 0) letterClicks = 0; 
+        if(validKeys.includes(e.key)){ //input letter
+            letterClicks++;
+            currentWord+=e.key;
+            buttons.forEach(button => {
+                if(button.className == letterClicks){
+                    button.textContent = e.key;
+                }
+            });
+        }else if(e.key == 'Backspace'){ //erase letter
+            letterClicks--;
+            currentWord = currentWord.slice(0,-1);
+            buttons.forEach(button => {
+                if(button.className == letterClicks+1){
+                    button.textContent = '';
+                }
+            });
+        }
+        if(letterClicks < 0) letterClicks = 0;
         else if(letterClicks > 5) letterClicks = 5;
-
-        buttons.forEach(button => {
-            if(!erase){
-                if(button.className == letterClicks) button.textContent = e.key;
-            }
-            else if(erase){
-                if(button.className == letterClicks+1) button.textContent = "";
-            }
-        });
     }
     window.addEventListener('keydown', handleKeys);
 
