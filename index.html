@@ -40,17 +40,15 @@
         if(validKeys.includes(e.key) && currentWord.length < 5){ //input letter
             currentWord+=e.key;
             buttons.forEach(button => {
-                if(button.className == letterClicks){
+                if(button.className == currentWord.length){
                     button.textContent = e.key;
-                }
-            });
+                }});
         }else if(e.key == 'Backspace' && currentWord.length > 0){ //erase letter
             currentWord = currentWord.slice(0,-1);
             buttons.forEach(button => {
-                if(button.className == letterClicks+1){
+                if(button.className == currentWord.length + 1){
                     button.textContent = '';
-                }
-            });
+                }});
         }else if (e.key == 'Enter' && currentWord.length == 5){
             //check if currentWord is a valid word and 
             //check if currentWord is chosen word
