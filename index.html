@@ -34,6 +34,7 @@
         chosenWord = validWords[Math.floor(Math.random() * validWords.length)];
     }
     chooseWord();
+    console.log(chosenWord);
 
     function handleKeys(e){
         let erase = false;
@@ -53,6 +54,15 @@
                     button.textContent = '';
                 }
             });
+        }else if (e.key == 'Enter' && letterClicks == 5){
+            //check if currentWord is a valid word
+            let wordIsValid = false;
+            if(validWords.includes(currentWord)) wordIsValid = true;
+            //check if currentWord is chosen word
+            let wordIsCorrect = false;
+            if(currentWord == chosenWord && wordIsValid == true){
+                console.log('correct!');
+            }
         }
         if(letterClicks < 0) letterClicks = 0;
         else if(letterClicks > 5) letterClicks = 5;
