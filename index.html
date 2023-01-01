@@ -41,11 +41,12 @@
         <button id="input" class="54"></button>
         <button id="input" class="55"></button>
     </div>
+    <div id="button-spawn"></div>
 
 <script>
 
     //this method of finding 5 letter words
-    const wordList = ["cats","alien","trout","mouth","mooth","dog","arithmetic","balls","jingle",'falls',"stalk"]; //should only accept 5 letter words
+    const wordList = ['talks',"cats","alien","trout","mouth","moott","dog","arithmetic","balls","jingle",'falls',"stalk"]; //should only accept 5 letter words
     const validWords = wordList.filter(word => word.length == 5);
 
     //manage key input
@@ -54,12 +55,43 @@
     let chosenWord = '';
     let currentWord = '';
     let buttonClassOffset = 0;
+    let roundOver = false;
 
     function chooseWord() {
         chosenWord = validWords[Math.floor(Math.random() * validWords.length)];
     }
     chooseWord();
     console.log(chosenWord);
+
+
+
+    //create play again button here, so that player cant skip rounds
+    function addButton(){
+        
+            const newContent = document.createElement('button');
+                  newContent.classList.add('play-again');
+                  newContent.textContent = "Play Again";
+
+            const spawnDiv = document.querySelector('#button-spawn'); 
+
+            newContent.addEventListener("click", () => {
+                currentWord = '';
+                buttonClassOffset = 0;
+                chooseWord();
+                console.log(chosenWord);   
+                
+                buttons.forEach(button => {
+                    button.style.removeProperty('background-color');
+                    button.style.backgroundColor = "light-gray";
+                    button.textContent = '';
+                });  
+                spawnDiv.removeChild(newContent);
+            });   
+
+
+            spawnDiv.appendChild(newContent);
+
+        }
 
     function handleKeys(e){
         
@@ -81,15 +113,18 @@
                     button.textContent = '';
                 }});
 
-        }else if (e.key == 'Enter' && currentWord.length == 5){
-            //check if currentWord is a valid word and 
-            //check if currentWord is chosen word
+        }else if (e.key == 'Enter' && currentWord.length == 5){ //correct word!
+
             if(validWords.includes(currentWord) && currentWord == chosenWord){
-
-                console.log('correct!');
-                //reset game here
-                chooseWord();
-
+                
+                buttons.forEach(button => {
+                    if(button.className >= buttonClassOffset && button.className <= buttonClassOffset + 5){
+                        button.style.backgroundColor = 'green';
+                    }
+                });
+                
+                addButton();
+                
             }else if(validWords.includes(currentWord) && currentWord != chosenWord){
 
                 //determine correct letters
@@ -100,39 +135,50 @@
                 
                 console.log(distinctLetters); 
 
-                //determine green letters and yellow letters
                 let greenLetters = [];
                 let yellowLetters = [];
-                for(let i = 0; i < inputLetters.length; i++){
-                    if (inputLetters[i] == lettersToCompare[i]){
+                let blackLetters = [];
+                //determine if letters are correct or false or misplaced
+                for (let i = 0; i < inputLetters.length; i++){
+                    if(inputLetters[i] == lettersToCompare[i]){
 
-                        greenLetters.push(inputLetters[i]);
+                        greenLetters.push(i + buttonClassOffset + 1);
 
                     }else if(distinctLetters.includes(inputLetters[i])){
-                        
-                        yellowLetters.push(inputLetters[i]);
+
+                        yellowLetters.push(i + buttonClassOffset + 1);
+
+                    }else {
+
+                        blackLetters.push(i + buttonClassOffset + 1);
 
                     }
                 }
-                //change colors of buttons
-                buttons.forEach(button => {
-                    if(button.className >= buttonClassOffset){
 
-                        if(greenLetters.includes(button.textContent)){
+                buttons.forEach(button => {
+                    if(button.className >= buttonClassOffset){ // stops from changing color of previous rows
+                        if(greenLetters.includes(+button.className)){ //string-number fix with + sign
 
                             button.style.backgroundColor = 'green';
 
-                        }else if(yellowLetters.includes(button.textContent)){
+                        }else if(yellowLetters.includes(+button.className)){ 
 
                             button.style.backgroundColor = 'yellow';
+
+                        }else if (blackLetters.includes(+button.className)){
+
+                            button.style.backgroundColor = 'darkgray';
 
                         }
                     }
                 });
-                console.log(greenLetters);
-                console.log(yellowLetters);
 
-               //reset current word
+                console.log('Green: ' + greenLetters);
+                console.log('Yellow: ' + yellowLetters);
+                console.log('Black: ' + blackLetters);
+                
+
+               //reset current word and yellows and greens
                currentWord = '';
                //set new offset for new row
                 if(buttonClassOffset < 50) buttonClassOffset += 10;
