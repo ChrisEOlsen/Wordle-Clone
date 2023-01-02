@@ -45,6 +45,11 @@
 
 <script>
 
+    //TO DO: Make the round end if you have too many false guesses
+    //       save words that have already been solved and make sure that it doesnt show up again
+    //       Update word list
+    //       Work on CSS 
+
     //this method of finding 5 letter words
     const wordList = ['talks',"cats","alien","trout","mouth","moott","dog","arithmetic","balls","jingle",'falls',"stalk"]; //should only accept 5 letter words
     const validWords = wordList.filter(word => word.length == 5);
@@ -62,8 +67,6 @@
     }
     chooseWord();
     console.log(chosenWord);
-
-
 
     //create play again button here, so that player cant skip rounds
     function addButton(){
@@ -113,9 +116,9 @@
                     button.textContent = '';
                 }});
 
-        }else if (e.key == 'Enter' && currentWord.length == 5){ //correct word!
+        }else if (e.key == 'Enter' && currentWord.length == 5){ //correct word or too many guesses!
 
-            if(validWords.includes(currentWord) && currentWord == chosenWord){
+            if(currentWord == chosenWord){
                 
                 buttons.forEach(button => {
                     if(button.className >= buttonClassOffset && button.className <= buttonClassOffset + 5){
@@ -123,6 +126,7 @@
                     }
                 });
                 
+                console.log('correct');
                 addButton();
                 
             }else if(validWords.includes(currentWord) && currentWord != chosenWord){
@@ -175,13 +179,17 @@
 
                 console.log('Green: ' + greenLetters);
                 console.log('Yellow: ' + yellowLetters);
-                console.log('Black: ' + blackLetters);
-                
+                console.log('Black: ' + blackLetters);        
 
                //reset current word and yellows and greens
                currentWord = '';
                //set new offset for new row
-                if(buttonClassOffset < 50) buttonClassOffset += 10;
+                if(buttonClassOffset < 50){
+                    buttonClassOffset += 10;
+                } else if (buttonClassOffset == 50){ //too many guesses
+                    addButton();
+                    console.log('fail');
+                }
             }
 
         }
