@@ -96,9 +96,7 @@
                 spawnDiv.removeChild(newContent);
             });   
 
-
             spawnDiv.appendChild(newContent);
-
         }
 
     function handleKeys(e){
@@ -181,8 +179,7 @@
                             }else if (blackLetters.includes(+button.className)){
 
                                 button.style.backgroundColor = 'darkgray';
-                                allBlackLetters.push(button.textContent);
-
+                                
                             }
                         }
                     });
@@ -190,7 +187,6 @@
                     console.log('Green: ' + greenLetters);
                     console.log('Yellow: ' + yellowLetters);
                     console.log('Black: ' + blackLetters);     
-                    console.log(allBlackLetters);   
 
                 //reset current word and yellows and greens
                 currentWord = '';
