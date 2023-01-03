@@ -45,7 +45,7 @@
 
 <script>
 
-    //TO DO: Save all "black letters" and display them at the bottom
+    //TO DO: 
     //       save words that have already been solved and make sure that it doesnt show up again
     //       Update word list
     //       Work on CSS 
@@ -61,10 +61,13 @@
     let currentWord = '';
     let buttonClassOffset = 0;
     let roundOver = false;
-    let allBlackLetters = [];
+    let previousCorrect = [];
 
     function chooseWord() {
         chosenWord = validWords[Math.floor(Math.random() * validWords.length)];
+        if(previousCorrect.includes(chosenWord)){
+            chooseWord();
+        }
     }
     chooseWord();
     console.log(chosenWord);
@@ -132,6 +135,7 @@
                     
                     console.log('correct');
                     roundOver = true;
+                    previousCorrect.push(currentWord);
                     addButton();
                     
                 }else if(validWords.includes(currentWord) && currentWord != chosenWord){
