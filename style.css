@@ -1,46 +1,40 @@
-body{
-    width: 100vw;
-    height: 100vh;
+body {
     display: flex;
     flex-direction: column;
+    align-items: center;
 }
 
 .word-screen {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
-    grid-template-rows: repeat(6, 1fr);
-    width: 80vw;
-    height: 40vh;
-    margin-left: auto;
-    margin-right: auto;
-    font-size: 16px;
-    grid-gap: 0;
+    grid-template-rows: repeat(6, 1fr);   
+    width: 70vw;
+    height: calc((70vw / 5) * 6); /*Keeps buttons as perfect square*/
 }
 
-#input {
-    width: 100%;
-    padding-bottom: 100%;
-    box-sizing: border-box;
-    font-size: 12vw; /*Reactive font-size*/
-    font-weight: bold;
-    overflow: hidden;
-    text-align: center;
+#input{
+    font-size: 12vw;
+    font-weight: 600;
+    background-color: white;
+    border: solid black 2px;
+    border-radius: 20px;
 }
+
 
 @media only screen and (min-width: 1441px) { /*Screen must be a minimum size of 1440px in order to shrink grid down*/
     .word-screen {
         width: 30vw;
-        height: 30vh;
+        height: calc((30vw / 5) * 6); /*adjusts to new width dimensions*/
     }
+
     #input{
-        font-size: 5vw;
+        font-size: 4vw;
     }
 }
 
 
-
 .play-again {
-    margin-top: auto;
+    margin-top: 10px;
     margin-left: auto;
     margin-right: auto;
     width: 10vw;
