@@ -45,14 +45,10 @@
 
 <script>
 
-    //TO DO: 
+    //TO DO: In order to read from a txt file you must set up node.js
     //       save words that have already been solved and make sure that it doesnt show up again
     //       Update word list
     //       Work on CSS 
-
-    //this method of finding 5 letter words
-    const wordList = ['talks',"cats","alien","trout","mouth","moott","dog","arithmetic","balls","jingle",'falls',"stalk"]; //should only accept 5 letter words
-    const validWords = wordList.filter(word => word.length == 5);
 
     //manage key input
     const buttons = document.querySelectorAll("#input");
@@ -63,6 +59,10 @@
     let roundOver = false;
     let previousCorrect = [];
 
+    //Take all valid 5 letter words from txt file and put into validWords
+
+    let validWords = ["alien","trout","stalk","talks","mouth","moose"];
+
     function chooseWord() {
         chosenWord = validWords[Math.floor(Math.random() * validWords.length)];
         if(previousCorrect.includes(chosenWord)){
@@ -70,6 +70,7 @@
         }
     }
     chooseWord();
+    console.log(validWords);
     console.log(chosenWord);
 
     //create play again button here, so that player cant skip rounds
@@ -77,7 +78,7 @@
         
             const newContent = document.createElement('button');
                   newContent.classList.add('play-again');
-                  newContent.textContent = "Play Again";
+                  newContent.textContent = "Next";
 
             const spawnDiv = document.querySelector('#button-spawn'); 
 
@@ -179,7 +180,7 @@
                             }else if (blackLetters.includes(+button.className)){
 
                                 button.style.backgroundColor = 'darkgray';
-                                
+
                             }
                         }
                     });
