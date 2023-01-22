@@ -21,7 +21,7 @@ body {
     height: calc(90vw / 5);
     background-color: white;
     border: dotted 1px black;
-    font-size: 0;
+    font-size: 0px;
     /*font-size: calc((90vw / 6));*/
 }
 
