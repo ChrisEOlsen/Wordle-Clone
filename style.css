@@ -9,17 +9,19 @@ body {
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(6, 1fr);   
-    width: 70vw;
-    height: calc((70vw / 5) * 6); /*Keeps buttons as perfect square*/
+    width: 90vw;
+    height: calc((90vw / 5) * 6); /*Keeps buttons as perfect square*/
     border: 8px solid #EFE1CE;
+    border-radius: 10px;
     margin-top: 2vh;
 }
 
 #input{
-    width: calc(70vw / 5);
+    width: calc(90vw / 5);
+    height: calc(90vw / 5);
     background-color: white;
     border: dotted 1px black;
-    font-size: calc((70vw / 6));
+    font-size: calc((90vw / 6));
 }
 
 
@@ -32,6 +34,7 @@ body {
 
     #input{
         width: calc(30vw / 5);
+        height: calc(30vw / 5);;
         font-size: 4vw;
     }
 }
