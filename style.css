@@ -12,7 +12,7 @@ body {
     width: 90vw;
     height: calc((90vw / 5) * 6); /*Keeps buttons as perfect square*/
     border: 8px solid #EFE1CE;
-    border-radius: 10px;
+    /*border-radius: 10px;*/
     margin-top: 2vh;
 }
 
