@@ -16,10 +16,10 @@ body {
 }
 
 #input{
-    font-size: 12vw;
-    font-weight: 600;
+    width: calc(70vw / 5);
     background-color: white;
     border: dotted 1px black;
+    font-size: calc((70vw / 6));
 }
 
 
@@ -31,6 +31,7 @@ body {
     }
 
     #input{
+        width: calc(30vw / 5);
         font-size: 4vw;
     }
 }
